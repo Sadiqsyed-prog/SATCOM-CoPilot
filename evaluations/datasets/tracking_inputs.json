@@ -1,0 +1,78 @@
+[
+  {
+    "test_id": "TC-001",
+    "category": "happy_path",
+    "description": "ISS pass over Bengaluru with clear sky — full pipeline",
+    "query": "When does the ISS pass over Bengaluru in the next 3 days?",
+    "expected_intent": "TRACK_PASS",
+    "expected_satellite": "ISS (ZARYA)",
+    "expected_norad_id": 25544,
+    "expected_location": {"city": "Bengaluru", "lat": 12.97, "lon": 77.59, "tolerance": 0.5},
+    "expected_time_window_hours": 72,
+    "mock_tle_file": "tle_iss_mock.txt",
+    "mock_weather_file": "weather_clear_mock.json",
+    "expected_visibility_class": "CLEAR"
+  },
+  {
+    "test_id": "TC-002",
+    "category": "weather_blocked",
+    "description": "ISS pass over Mumbai with monsoon overcast conditions",
+    "query": "Can I see the ISS tonight from Mumbai?",
+    "expected_intent": "VISIBILITY_CHECK",
+    "expected_satellite": "ISS (ZARYA)",
+    "expected_norad_id": 25544,
+    "expected_location": {"city": "Mumbai", "lat": 19.07, "lon": 72.87, "tolerance": 0.5},
+    "mock_tle_file": "tle_iss_mock.txt",
+    "mock_weather_file": "weather_overcast_mock.json",
+    "expected_visibility_class": "OBSTRUCTED"
+  },
+  {
+    "test_id": "TC-003",
+    "category": "invalid_satellite",
+    "description": "Non-existent satellite triggers SATELLITE_NOT_FOUND error",
+    "query": "Track satellite PHANTOM-9000 over Paris",
+    "expected_intent": "TRACK_PASS",
+    "expected_error": "SATELLITE_NOT_FOUND",
+    "expected_error_contains": "PHANTOM-9000"
+  },
+  {
+    "test_id": "TC-004",
+    "category": "invalid_coordinates",
+    "description": "Out-of-range coordinates trigger INVALID_COORDINATES error",
+    "query": null,
+    "raw_coordinates": {"lat": 999.0, "lon": -500.0},
+    "expected_error": "INVALID_COORDINATES"
+  },
+  {
+    "test_id": "TC-005",
+    "category": "api_failure",
+    "description": "CelesTrak failure triggers DATA_SOURCE_UNAVAILABLE — no fabrication",
+    "query": "Where is the ISS right now?",
+    "expected_intent": "SATELLITE_POSITION",
+    "simulate_celestrak_failure": true,
+    "expected_error": "DATA_SOURCE_UNAVAILABLE",
+    "must_not_contain_fabricated_data": true
+  },
+  {
+    "test_id": "TC-006",
+    "category": "weather_fallback",
+    "description": "Open-Meteo timeout triggers fallback to clear sky assumption",
+    "query": "ISS pass over Sydney?",
+    "expected_intent": "TRACK_PASS",
+    "mock_tle_file": "tle_iss_mock.txt",
+    "simulate_weather_failure": true,
+    "expected_weather_source": "FALLBACK_CLEAR_SKY",
+    "expected_visibility_class": "CLEAR"
+  },
+  {
+    "test_id": "TC-007",
+    "category": "default_satellite",
+    "description": "No satellite specified — defaults to ISS",
+    "query": "What passes over Bengaluru tonight?",
+    "expected_intent": "TRACK_PASS",
+    "expected_satellite": "ISS (ZARYA)",
+    "expected_norad_id": 25544,
+    "mock_tle_file": "tle_iss_mock.txt",
+    "mock_weather_file": "weather_clear_mock.json"
+  }
+]

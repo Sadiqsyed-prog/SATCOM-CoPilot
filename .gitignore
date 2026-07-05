@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Skyfield data files (downloaded at runtime)
+*.bsp
+de421.bsp
+
+# Evaluation reports (generated)
+evaluations/reports/*.json
+evaluations/reports/*.html
+
+# Temporary files
+*.log
+*.tmp
+
+# Environment variables
+.env
+.env.local

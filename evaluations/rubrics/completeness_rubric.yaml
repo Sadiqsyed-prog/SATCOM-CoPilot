@@ -1,0 +1,37 @@
+rubric:
+  name: "Response Completeness & User Experience"
+  weight: 0.25
+  description: "Validates that responses are complete, well-formatted, and actionable"
+
+  criteria:
+    - id: "CMP-01"
+      description: "All required fields populated in success responses"
+      weight: 0.30
+      scoring:
+        pass: "All schema-required fields present and non-null"
+        fail: "Any required field missing or null in success response"
+      evidence: "Schema validation against PassWindow and WeatherReport models"
+
+    - id: "CMP-02"
+      description: "Mission Briefing format consistency"
+      weight: 0.25
+      scoring:
+        pass: "Response follows Mission Briefing template structure"
+        fail: "Response missing header, pass table, or source attribution sections"
+      evidence: "Validate response structure against Flight Director template"
+
+    - id: "CMP-03"
+      description: "Actionable observation recommendation text present"
+      weight: 0.25
+      scoring:
+        pass: "Recommendation text provides specific, actionable advice with emoji indicators"
+        fail: "Generic, empty, or absent recommendation"
+      evidence: "Check recommendation field is non-empty and contextual"
+
+    - id: "CMP-04"
+      description: "Timestamps and data source metadata included"
+      weight: 0.20
+      scoring:
+        pass: "tle_epoch, data_source, and computation timestamps all present"
+        fail: "Any metadata timestamp or attribution missing"
+      evidence: "Verify metadata fields in pipeline output"

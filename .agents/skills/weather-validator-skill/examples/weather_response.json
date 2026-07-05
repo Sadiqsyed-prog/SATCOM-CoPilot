@@ -1,0 +1,41 @@
+{
+  "metadata": {
+    "description": "Example Open-Meteo forecast response for Bengaluru",
+    "generated_by": "weather-validator-skill",
+    "note": "Reference example for development and mock data generation"
+  },
+  "latitude": 12.97,
+  "longitude": 77.59,
+  "generationtime_ms": 0.48,
+  "utc_offset_seconds": 0,
+  "timezone": "GMT",
+  "timezone_abbreviation": "GMT",
+  "elevation": 920.0,
+  "hourly_units": {
+    "time": "iso8601",
+    "cloud_cover": "%",
+    "cloud_cover_low": "%",
+    "cloud_cover_mid": "%",
+    "cloud_cover_high": "%",
+    "temperature_2m": "°C",
+    "relative_humidity_2m": "%",
+    "visibility": "m"
+  },
+  "hourly": {
+    "time": [
+      "2026-07-02T00:00",
+      "2026-07-02T01:00",
+      "2026-07-02T02:00",
+      "2026-07-02T03:00",
+      "2026-07-02T04:00",
+      "2026-07-02T05:00"
+    ],
+    "cloud_cover": [15, 12, 18, 22, 30, 25],
+    "cloud_cover_low": [5, 3, 8, 10, 15, 12],
+    "cloud_cover_mid": [8, 6, 10, 12, 18, 15],
+    "cloud_cover_high": [10, 8, 5, 8, 12, 10],
+    "temperature_2m": [22.4, 21.8, 21.2, 20.8, 20.5, 20.2],
+    "relative_humidity_2m": [65, 68, 72, 75, 78, 80],
+    "visibility": [24140, 24140, 22000, 20000, 18000, 19000]
+  }
+}

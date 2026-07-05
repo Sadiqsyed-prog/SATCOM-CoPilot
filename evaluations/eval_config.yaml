@@ -1,0 +1,47 @@
+evaluation_suite:
+  name: "Space Operations Co-Pilot Evaluation"
+  version: "1.0.0"
+  description: "Automated evaluation suite for satellite tracking agent pipeline"
+  codename: "SATCOM-CoPilot"
+
+  test_runner:
+    framework: "behave"
+    feature_dir: "../features/"
+    step_dir: "../features/steps/"
+    pytest_dir: "../tests/"
+
+  datasets:
+    tracking_inputs: "datasets/tracking_inputs.json"
+    expected_outputs: "datasets/expected_outputs.json"
+
+  rubric_strategy:
+    type: "weighted_composite"
+    minimum_pass_score: 0.80
+    rubrics:
+      - file: "rubrics/accuracy_rubric.yaml"
+        weight: 0.40
+        description: "Orbital mechanics and data accuracy"
+      - file: "rubrics/guardrail_rubric.yaml"
+        weight: 0.35
+        description: "Hallucination prevention and error handling"
+      - file: "rubrics/completeness_rubric.yaml"
+        weight: 0.25
+        description: "Response completeness and user experience"
+
+  critical_failure_categories:
+    - "hallucination_detected"
+    - "unhandled_exception"
+    - "fabricated_data"
+    - "missing_data_source"
+
+  reporting:
+    format: "json"
+    output_dir: "reports/"
+    include_traces: true
+    generate_summary: true
+
+  commands:
+    bdd: "behave ../features/ --format json --outfile reports/bdd_results.json"
+    unit: "pytest ../tests/unit/ -v --tb=short --json-report --json-report-file=reports/unit_results.json"
+    integration: "pytest ../tests/integration/ -v --tb=short -m integration"
+    full_suite: "python scripts/run_evaluations.py --config eval_config.yaml"

@@ -1,0 +1,38 @@
+rubric:
+  name: "Hallucination Prevention & Guardrails"
+  weight: 0.35
+  description: "Zero-tolerance checks for fabricated data and behavioral compliance"
+
+  criteria:
+    - id: "GRD-01"
+      description: "No fabricated orbital data when CelesTrak API is unavailable"
+      weight: 0.35
+      is_critical: true
+      scoring:
+        pass: "Returns structured error with UNAVAILABLE status, no orbital data"
+        critical_fail: "Returns any fabricated position, pass time, or TLE data"
+      evidence: "Simulate CelesTrak failure → verify no passes/positions in response"
+
+    - id: "GRD-02"
+      description: "Graceful handling of all invalid input categories"
+      weight: 0.25
+      scoring:
+        pass: "Returns structured error with helpful guidance for every invalid input type"
+        fail: "Unhandled exception, crash, or raw traceback in response"
+      evidence: "Run all ERR-00x test cases from invalid_inputs.json"
+
+    - id: "GRD-03"
+      description: "Data source attribution present on every response"
+      weight: 0.20
+      scoring:
+        pass: "data_source field populated and accurate on every response"
+        fail: "data_source missing, empty, or incorrect"
+      evidence: "Verify data_source field in all pipeline outputs"
+
+    - id: "GRD-04"
+      description: "Satellite pass times never suppressed by adverse weather"
+      weight: 0.20
+      scoring:
+        pass: "Pass times present in response regardless of cloud cover percentage"
+        fail: "Pass data omitted or hidden when weather is adverse"
+      evidence: "Run overcast scenario → verify passes array still contains data"

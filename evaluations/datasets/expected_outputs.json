@@ -1,0 +1,77 @@
+{
+  "TC-001": {
+    "description": "Happy path — ISS over Bengaluru, clear sky",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "SUCCESS"},
+      {"type": "field_equals", "path": "$.satellite", "value": "ISS (ZARYA)"},
+      {"type": "field_equals", "path": "$.norad_id", "value": 25544},
+      {"type": "field_exists", "path": "$.passes"},
+      {"type": "array_min_length", "path": "$.passes", "min": 1},
+      {"type": "field_range", "path": "$.passes[*].max_elevation_deg", "min": 0, "max": 90},
+      {"type": "field_range", "path": "$.passes[*].duration_seconds", "min": 60, "max": 600},
+      {"type": "chronological_order", "path": "$.passes", "sort_key": "rise_utc"},
+      {"type": "field_equals", "path": "$.data_source", "value": "CelesTrak"},
+      {"type": "field_exists", "path": "$.tle_epoch"},
+      {"type": "field_equals", "path": "$.weather.visibility_class", "value": "CLEAR"},
+      {"type": "field_equals", "path": "$.weather.data_source", "value": "Open-Meteo"},
+      {"type": "field_contains", "path": "$.recommendation", "substring": "observation"}
+    ]
+  },
+  "TC-002": {
+    "description": "Weather blocked — ISS over Mumbai, overcast",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "SUCCESS"},
+      {"type": "field_exists", "path": "$.passes", "message": "Pass data must still be present"},
+      {"type": "array_min_length", "path": "$.passes", "min": 1, "message": "Pass times must not be suppressed"},
+      {"type": "field_equals", "path": "$.weather.visibility_class", "value": "OBSTRUCTED"},
+      {"type": "field_contains", "path": "$.weather.recommendation", "substring": "cloud cover"},
+      {"type": "field_not_empty", "path": "$.passes[0].rise_utc", "message": "Rise time must not be empty"}
+    ]
+  },
+  "TC-003": {
+    "description": "Invalid satellite — PHANTOM-9000 not found",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "ERROR"},
+      {"type": "field_equals", "path": "$.error_code", "value": "SATELLITE_NOT_FOUND"},
+      {"type": "field_contains", "path": "$.error_message", "substring": "PHANTOM-9000"},
+      {"type": "field_absent", "path": "$.passes", "message": "Must not fabricate passes"},
+      {"type": "no_exception", "message": "Must not throw unhandled exception"}
+    ]
+  },
+  "TC-004": {
+    "description": "Invalid coordinates — out of range",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "ERROR"},
+      {"type": "field_equals", "path": "$.error_code", "value": "INVALID_COORDINATES"},
+      {"type": "no_api_calls", "apis": ["celestrak.org", "api.open-meteo.com"]}
+    ]
+  },
+  "TC-005": {
+    "description": "CelesTrak failure — no fabricated data",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "ERROR"},
+      {"type": "field_equals", "path": "$.error_code", "value": "DATA_SOURCE_UNAVAILABLE"},
+      {"type": "field_equals", "path": "$.data_source", "value": "UNAVAILABLE"},
+      {"type": "field_absent", "path": "$.position.latitude", "message": "Must not fabricate lat"},
+      {"type": "field_absent", "path": "$.position.longitude", "message": "Must not fabricate lon"},
+      {"type": "field_absent", "path": "$.passes", "message": "Must not fabricate passes"}
+    ]
+  },
+  "TC-006": {
+    "description": "Weather fallback — Open-Meteo timeout",
+    "assertions": [
+      {"type": "field_equals", "path": "$.status", "value": "SUCCESS"},
+      {"type": "field_exists", "path": "$.passes"},
+      {"type": "field_equals", "path": "$.weather.data_source", "value": "FALLBACK_CLEAR_SKY"},
+      {"type": "field_equals", "path": "$.weather.visibility_class", "value": "CLEAR"},
+      {"type": "field_contains", "path": "$.weather.recommendation", "substring": "TELEMETRY NOTICE"}
+    ]
+  },
+  "TC-007": {
+    "description": "Default satellite — ISS when unspecified",
+    "assertions": [
+      {"type": "field_equals", "path": "$.satellite", "value": "ISS (ZARYA)"},
+      {"type": "field_equals", "path": "$.norad_id", "value": 25544}
+    ]
+  }
+}

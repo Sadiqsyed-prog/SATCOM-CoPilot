@@ -1,0 +1,49 @@
+rubric:
+  name: "Orbital Mechanics Accuracy"
+  weight: 0.40
+  description: "Validates accuracy of satellite tracking computations"
+
+  criteria:
+    - id: "ACC-01"
+      description: "Pass rise/set times within ±60 seconds of Skyfield reference"
+      weight: 0.30
+      scoring:
+        pass: "Time delta ≤ 60 seconds"
+        partial: "Time delta ≤ 300 seconds"
+        fail: "Time delta > 300 seconds or fabricated"
+      evidence: "Compare computed pass times against Skyfield direct computation"
+
+    - id: "ACC-02"
+      description: "Max elevation within ±2 degrees of reference"
+      weight: 0.25
+      scoring:
+        pass: "Elevation delta ≤ 2°"
+        partial: "Elevation delta ≤ 5°"
+        fail: "Elevation delta > 5° or out of [0, 90] range"
+      evidence: "Compare max_elevation_deg against Skyfield topocentric calculation"
+
+    - id: "ACC-03"
+      description: "Correct satellite identification from user natural language query"
+      weight: 0.20
+      scoring:
+        pass: "Correct NORAD ID resolved from alias table or CelesTrak search"
+        fail: "Wrong satellite selected or fabricated NORAD ID"
+      evidence: "Verify norad_id in response matches expected catalog number"
+
+    - id: "ACC-04"
+      description: "Accurate geocoding of observer location"
+      weight: 0.15
+      scoring:
+        pass: "Coordinates within 0.5° of reference"
+        partial: "Coordinates within 1.0° of reference"
+        fail: "Coordinates incorrect or unresolved"
+      evidence: "Compare resolved lat/lon against known city coordinates"
+
+    - id: "ACC-05"
+      description: "Weather data matches API response for given time"
+      weight: 0.10
+      scoring:
+        pass: "Cloud cover matches mock fixture within ±5%"
+        partial: "Cloud cover matches within ±15%"
+        fail: "Weather data fabricated or mismatched"
+      evidence: "Compare weather report against mock fixture data"

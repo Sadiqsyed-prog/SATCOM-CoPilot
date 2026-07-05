@@ -1,0 +1,36 @@
+{
+  "description": "Mock Open-Meteo response for Bengaluru with clear sky conditions",
+  "mock_type": "openmeteo_forecast",
+  "location": "Bengaluru, India",
+  "latitude": 12.97,
+  "longitude": 77.59,
+  "generationtime_ms": 0.42,
+  "utc_offset_seconds": 0,
+  "timezone": "GMT",
+  "timezone_abbreviation": "GMT",
+  "elevation": 920.0,
+  "hourly_units": {
+    "time": "iso8601",
+    "cloud_cover": "%",
+    "cloud_cover_low": "%",
+    "cloud_cover_mid": "%",
+    "cloud_cover_high": "%",
+    "temperature_2m": "°C",
+    "relative_humidity_2m": "%",
+    "visibility": "m"
+  },
+  "hourly": {
+    "time": [
+      "2026-07-02T00:00", "2026-07-02T01:00", "2026-07-02T02:00",
+      "2026-07-02T03:00", "2026-07-02T04:00", "2026-07-02T05:00",
+      "2026-07-02T06:00", "2026-07-02T07:00", "2026-07-02T08:00"
+    ],
+    "cloud_cover": [12, 15, 10, 8, 5, 10, 15, 20, 18],
+    "cloud_cover_low": [3, 5, 2, 0, 0, 3, 5, 8, 5],
+    "cloud_cover_mid": [5, 8, 5, 3, 2, 5, 8, 10, 8],
+    "cloud_cover_high": [8, 10, 6, 5, 3, 5, 8, 12, 10],
+    "temperature_2m": [22.4, 21.8, 21.2, 20.8, 20.5, 20.2, 21.0, 23.5, 26.0],
+    "relative_humidity_2m": [65, 68, 72, 75, 78, 80, 75, 65, 55],
+    "visibility": [24140, 24140, 22000, 24140, 24140, 22000, 20000, 24140, 24140]
+  }
+}

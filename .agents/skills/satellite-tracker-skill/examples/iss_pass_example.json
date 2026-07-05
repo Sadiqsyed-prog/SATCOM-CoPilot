@@ -1,0 +1,79 @@
+{
+  "metadata": {
+    "description": "Example GNC Console output for ISS pass over Bengaluru",
+    "generated_by": "satellite-tracker-skill",
+    "note": "This is a reference example for development and testing"
+  },
+  "status": "SUCCESS",
+  "satellite": "ISS (ZARYA)",
+  "norad_id": 25544,
+  "tle_epoch": "2026-07-01T12:00:00Z",
+  "data_source": "CelesTrak",
+  "computation_engine": "Skyfield/SGP4",
+  "observer": {
+    "city": "Bengaluru",
+    "country": "India",
+    "latitude": 12.9716,
+    "longitude": 77.5946,
+    "elevation_m": 920,
+    "timezone": "Asia/Kolkata"
+  },
+  "query_parameters": {
+    "time_window_hours": 72,
+    "minimum_elevation_deg": 10.0,
+    "start_utc": "2026-07-01T12:00:00Z",
+    "end_utc": "2026-07-04T12:00:00Z"
+  },
+  "passes": [
+    {
+      "pass_number": 1,
+      "rise_utc": "2026-07-02T01:23:45Z",
+      "rise_azimuth_deg": 220.1,
+      "rise_direction": "SW",
+      "culmination_utc": "2026-07-02T01:27:12Z",
+      "max_elevation_deg": 67.3,
+      "set_utc": "2026-07-02T01:30:40Z",
+      "set_azimuth_deg": 45.8,
+      "set_direction": "NE",
+      "is_sunlit": true,
+      "duration_seconds": 415,
+      "visibility_rating": "EXCELLENT"
+    },
+    {
+      "pass_number": 2,
+      "rise_utc": "2026-07-02T18:45:30Z",
+      "rise_azimuth_deg": 310.5,
+      "rise_direction": "NW",
+      "culmination_utc": "2026-07-02T18:48:55Z",
+      "max_elevation_deg": 32.1,
+      "set_utc": "2026-07-02T18:52:20Z",
+      "set_azimuth_deg": 130.2,
+      "set_direction": "SE",
+      "is_sunlit": true,
+      "duration_seconds": 410,
+      "visibility_rating": "GOOD"
+    },
+    {
+      "pass_number": 3,
+      "rise_utc": "2026-07-03T00:12:15Z",
+      "rise_azimuth_deg": 195.0,
+      "rise_direction": "S",
+      "culmination_utc": "2026-07-03T00:14:40Z",
+      "max_elevation_deg": 15.8,
+      "set_utc": "2026-07-03T00:17:05Z",
+      "set_azimuth_deg": 80.3,
+      "set_direction": "E",
+      "is_sunlit": false,
+      "duration_seconds": 290,
+      "visibility_rating": "LOW"
+    }
+  ],
+  "summary": {
+    "total_passes": 3,
+    "excellent_passes": 1,
+    "good_passes": 1,
+    "low_passes": 1,
+    "best_pass": 1,
+    "next_pass_utc": "2026-07-02T01:23:45Z"
+  }
+}

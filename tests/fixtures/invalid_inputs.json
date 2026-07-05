@@ -1,0 +1,75 @@
+{
+  "description": "Invalid input test cases for error handling validation",
+  "test_cases": [
+    {
+      "test_id": "ERR-001",
+      "category": "invalid_satellite",
+      "input": {
+        "query": "Track satellite PHANTOM-9000 over Paris",
+        "satellite_name": "PHANTOM-9000"
+      },
+      "expected": {
+        "error_code": "SATELLITE_NOT_FOUND",
+        "must_not_contain": ["passes", "rise_utc", "position"]
+      }
+    },
+    {
+      "test_id": "ERR-002",
+      "category": "invalid_coordinates",
+      "input": {
+        "latitude": 999.0,
+        "longitude": -500.0
+      },
+      "expected": {
+        "error_code": "INVALID_COORDINATES",
+        "no_api_calls": true
+      }
+    },
+    {
+      "test_id": "ERR-003",
+      "category": "ambiguous_location",
+      "input": {
+        "query": "ISS pass over Xyzzyville?",
+        "location": "Xyzzyville"
+      },
+      "expected": {
+        "error_code": "LOCATION_NOT_FOUND"
+      }
+    },
+    {
+      "test_id": "ERR-004",
+      "category": "empty_input",
+      "input": {
+        "query": ""
+      },
+      "expected": {
+        "intent": "UNKNOWN",
+        "contains_usage_guidance": true
+      }
+    },
+    {
+      "test_id": "ERR-005",
+      "category": "hallucination_prevention",
+      "input": {
+        "query": "What is the exact position of ISS right now?",
+        "simulate_celestrak_failure": true
+      },
+      "expected": {
+        "error_code": "DATA_SOURCE_UNAVAILABLE",
+        "data_source": "UNAVAILABLE",
+        "must_not_contain": ["latitude", "longitude", "position"]
+      }
+    },
+    {
+      "test_id": "ERR-006",
+      "category": "excessive_time_window",
+      "input": {
+        "query": "Show ISS passes for the next 30 days"
+      },
+      "expected": {
+        "time_window_capped_hours": 168,
+        "notice_type": "TIME_WINDOW_CAPPED"
+      }
+    }
+  ]
+}
