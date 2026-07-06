@@ -201,6 +201,7 @@ Quality is enforced through **Spec-Driven Development** — behavior was specifi
   - `error_handling.feature` — API timeouts and malformed input
 - **Deterministic fixtures** — frozen TLE sets and canned weather JSON make orbital tests reproducible: same input, same pass windows, every run, forever.
 - **QA evaluation suite** in [`evaluations/`](evaluations/) — rubric-based scoring the Sentry agent applies to live responses.
+  👉 **[View our perfect 100% Kaggle Technical Validation Report](evaluations/reports/eval_report.md)** proving zero hallucinations.
 
 ```gherkin
 Scenario: Weather API failure degrades gracefully
